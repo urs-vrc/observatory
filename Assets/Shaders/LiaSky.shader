@@ -7,7 +7,7 @@ Shader "Unlit/LiaSky"
 {
 Properties
     {
-        _CustomSunDir ("Sun Direction", Vector) = (0, 1, 0, 0)
+        _SunDirection ("Sun Direction", Vector) = (0, 1, 0, 0)
         _WeatherIntensity ("Weather Intensity", Range(0, 1)) = 0
     }
     SubShader
@@ -34,7 +34,7 @@ Properties
                 float4 vertex : SV_POSITION;
             };
 
-            float4 _CustomSunDir;
+            float4 _SunDirection;
             float _WeatherIntensity;
 
             float hash3(float3 p)
@@ -55,7 +55,7 @@ Properties
             fixed4 frag (v2f i) : SV_Target
             {
                 float3 viewDir = normalize(float3((i.uv - 0.5) * float2(_ScreenParams.x / _ScreenParams.y, 1.0), -1.0));
-                float3 sunDir = normalize(_CustomSunDir.xyz);
+                float3 sunDir = normalize(_SunDirection.xyz);
                 float skyVisibility = lerp(1.0, 0.08, _WeatherIntensity);
 
                 // Evaluate Day/Night state strictly from our actual physical sun height vector

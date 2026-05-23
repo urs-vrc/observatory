@@ -4,7 +4,6 @@
 using System;
 using UdonSharp;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VRC.SDKBase;
 using VRC.Udon;
 
@@ -16,6 +15,11 @@ public class WorldManager : UdonSharpBehaviour
 
     private float _systemTimeOffset = 0f;
     private bool _hasCalculatedOffset = false;
+    
+    // shader IDs
+    private readonly int _sunDirID = Shader.PropertyToID("_SunDirection");
+    private readonly int _weatherID = Shader.PropertyToID("_WeatherIntensity");
+    
 
     [Header("Weather")] public float WeatherSpeed = 0.01f;
     
@@ -25,6 +29,14 @@ public class WorldManager : UdonSharpBehaviour
         {
             SyncInitialTime();
         }
+    }
+
+    private void Update()
+    {
+        if (Networking.IsOwner(gameObject)) 
+            UpdateHostTime();
+        
+        UpdateSkybox();
     }
 
     public override void OnOwnershipTransferred(VRCPlayerApi player)
@@ -72,5 +84,21 @@ public class WorldManager : UdonSharpBehaviour
         var totalSeconds = (localTime.Hour * 3600f) + (localTime.Minute * 60f) + localTime.Second;
         
         return totalSeconds / 86400f;
+    }
+
+    private void UpdateSkybox()
+    {
+        var angle = _hostTime * 360f;
+
+        if (sunEntity is null) return;
+        
+        sunEntity.localRotation = Quaternion.Euler(angle, -90f, 0f);
+        var sunDirection = -sunEntity.forward;
+        RenderSettings.skybox.SetVector(_sunDirID, new Vector4(sunDirection.x, sunDirection.y, sunDirection.z, 0f));
+
+        var weatherWave = Mathf.Sin(Time.timeSinceLevelLoad * WeatherSpeed);
+        var currentWeatherIntensity = (weatherWave * 0.5f) + 0.5f;
+        
+        RenderSettings.skybox.SetFloat(_weatherID, currentWeatherIntensity);
     }
 }
