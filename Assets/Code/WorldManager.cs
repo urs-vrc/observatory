@@ -11,10 +11,16 @@ public class WorldManager : UdonSharpBehaviour
 {
     [Header("Time of Day")] 
     public Transform sunEntity;
-    [UdonSynced] private float _hostTime;
+    [UdonSynced] public float _hostTime;
 
     private float _systemTimeOffset = 0f;
     private bool _hasCalculatedOffset = false;
+
+    [Header("Debug Controls")]
+    [Tooltip("Tick this box to control the skybox time manually with the slider below.")]
+    public bool debugOverride = false;
+    [Range(0f, 1f)] [Tooltip("0.0 = Midnight, 0.25 = 6AM, 0.5 = Noon, 0.75 = 6PM")]
+    public float debugTime = 0.5f;
     
     // shader IDs
     private readonly int _sunDirID = Shader.PropertyToID("_SunDirection");
@@ -46,7 +52,6 @@ public class WorldManager : UdonSharpBehaviour
             // we need to keep the time we already initially synced already
             _hasCalculatedOffset = false;
             UpdateHostTime();
-            
         }
         
         base.OnOwnershipTransferred(player);
@@ -54,6 +59,12 @@ public class WorldManager : UdonSharpBehaviour
 
     private void UpdateHostTime()
     {
+        if (debugOverride)
+        {
+            _hostTime = debugTime;
+            return;
+        }
+
         var localSystemTime = GetNormalizedSystemTime();
 
         if (!_hasCalculatedOffset)
@@ -72,8 +83,14 @@ public class WorldManager : UdonSharpBehaviour
 
     private void SyncInitialTime()
     {
-        // let's pull the time from the owner to get initial state
-        _hostTime = GetNormalizedSystemTime();
+        if (debugOverride)
+        {
+            _hostTime = debugTime;
+        }
+        else
+        {
+            _hostTime = GetNormalizedSystemTime();
+        }
         _systemTimeOffset = 0f;
         _hasCalculatedOffset = true;
     }
@@ -90,9 +107,9 @@ public class WorldManager : UdonSharpBehaviour
     {
         var angle = _hostTime * 360f;
 
-        if (sunEntity is null) return;
+        if (!sunEntity) return;
         
-        sunEntity.localRotation = Quaternion.Euler(angle, -90f, 0f);
+        sunEntity.rotation = Quaternion.Euler(angle, -90f, 0f);
         var sunDirection = -sunEntity.forward;
         RenderSettings.skybox.SetVector(_sunDirID, new Vector4(sunDirection.x, sunDirection.y, sunDirection.z, 0f));
 
