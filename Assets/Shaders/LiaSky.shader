@@ -1,8 +1,12 @@
-﻿Shader "Unlit/SkyboxShader"
+﻿// Copyright 2026 Ayase Minori and Umamusume Racing Society
+// Licensed under the BSD-3-Clause License
+// See LICENSE for details
+//
+// In memoriam of Liaku, thank you for bringing warmth for everyone in the URS <3
+Shader "Unlit/LiaSky"
 {
 Properties
     {
-        // Properties are now primarily populated externally by the WorldManager script
         _CustomSunDir ("Sun Direction", Vector) = (0, 1, 0, 0)
         _WeatherIntensity ("Weather Intensity", Range(0, 1)) = 0
     }
