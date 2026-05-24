@@ -132,12 +132,12 @@ Shader "Skybox/LiaSky"
 
                 // Daytime Sun Disk & Outer Corona
                 float sunDot = max(0.0f, dot(viewDir, sunDir));
-                float sunDisk = smoothstep(0.994f, 0.997f, sunDot) * (1.0f - isNight);
-                float sunGlow = smoothstep(0.98f, 0.75f, sunDot) * 0.4f * (1.0f - isNight);
-                
+                float sunDisk = smoothstep(0.9996f, 0.9998f, sunDot) * (1.0f - isNight);
+                float sunGlow = smoothstep(0.995f, 0.90f, sunDot) * 0.4f * (1.0f - isNight);
+
                 float sunWeatherDim = lerp(1.0f, 0.25f, _WeatherIntensity);
                 float3 sunColor = lerp(float3(1.0f, 0.96f, 0.88f), float3(0.4f, 0.4f, 0.4f), _WeatherIntensity);
-                
+
                 finalColor += (sunDisk + sunGlow) * sunColor * sunWeatherDim;
 
                 return float4(finalColor, 1.0f);
