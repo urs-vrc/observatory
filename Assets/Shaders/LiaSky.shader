@@ -119,16 +119,15 @@ Shader "Skybox/LiaSky"
                 // Dedicated Golden Memorial Star (LiaStar Alignment)
                 float3 natiePos = normalize(float3(0.2f, 0.5f, -1.0f));
                 float natieDot = dot(viewDir, natiePos);
-                
-                float exclusionMask = smoothstep(0.994f, 0.997f, natieDot) * isNight;
-                finalColor *= (1.0f - exclusionMask);
-              
                 float natieAngle = acos(clamp(natieDot, -1.0f, 1.0f));
                 float natieCore = smoothstep(0.0018f, 0.0f, natieAngle);
-                float natieGlowBloom = smoothstep(0.02f, 0.0f, natieAngle) * 0.4f;
+                
+                
+                float natieGlowBloom = smoothstep(0.04f, 0.0f, natieAngle) * 0.4f;
+                
                 float natieGlowPulse = sin(_Time.y * 1.2f) * 0.08f + 0.92f;
                 float3 goldenColor = float3(1.0f, 0.85f, 0.45f);
-
+                
                 finalColor += (natieCore + natieGlowBloom) * goldenColor * natieGlowPulse * 2.2f * skyVisibility * isNight;
 
                 // Daytime Sun Disk & Outer Corona
