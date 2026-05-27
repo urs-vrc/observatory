@@ -43,7 +43,7 @@ public class RedshiftEventBus : UdonSharpBehaviour
         if (!_isInitialized) InitializeBus();
 
         var index = (int)eventId;
-        if (index is < 1 or >= TotalEvents) return;
+        if (index < 1 || index >= TotalEvents) return;
         if (listener == null) return;
 
         var listeners = _eventRegistry[index];
