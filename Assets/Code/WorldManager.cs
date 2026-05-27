@@ -110,7 +110,7 @@ public class WorldManager : UdonSharpBehaviour
         if (!sunEntity) return;
         
         sunEntity.rotation = Quaternion.Euler(angle, -90f, 0f);
-        var sunDirection = sunEntity.forward;
+        var sunDirection = -sunEntity.forward;
         RenderSettings.skybox.SetVector(_sunDirID, new Vector4(sunDirection.x, sunDirection.y, sunDirection.z, 0f));
 
         var weatherWave = Mathf.Sin(Time.timeSinceLevelLoad * WeatherSpeed);
