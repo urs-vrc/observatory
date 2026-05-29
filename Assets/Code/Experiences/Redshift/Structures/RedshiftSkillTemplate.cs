@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿// Copyright 2026 Ayase Minori and Umamusume Racing Society
+// Licensed under the BSD-3-Clause License
+// See LICENSE for details
+using UnityEngine;
 
 [System.Serializable]
 public struct RedshiftSkillTemplate
@@ -22,9 +25,15 @@ public struct RedshiftSkillTemplate
     [Header("4. Runtime Structural States")]
     public bool requiresDueling;
 
-    [Header("Mathematical Payload (The Rewards)")]
+    [Header("5. Mathematical Payload & Targeting")]
+    [Tooltip("Who does this effect apply to? (Self, OpponentsInFront, OpponentsBehind, ClosestDuelTarget)")]
+    public RedshiftSkillTarget skillTarget;
+    
+    [Tooltip("Positive for buffs, negative for debuffs.")]
     public float speedLimitModifier;
+    [Tooltip("Positive for buffs, negative for debuffs.")]
     public float accelerationModifier;
+    [Tooltip("Positive heals stamina, negative drains/debuffs stamina.")]
     public float staminaRecoveryDelta;
     public float duration;
 
@@ -44,12 +53,13 @@ public struct RedshiftSkillTemplate
     }
 
     /// <summary>
-    /// Extracts the mathematical payload to drop into the active buff slots.
+    /// Extracts the mathematical payload to drop into the active buff/debuff slots.
     /// </summary>
     public RedshiftSkillEffect GetEffect()
     {
         return new RedshiftSkillEffect
         {
+            skillTarget = this.skillTarget,
             speedLimitModifier = this.speedLimitModifier,
             accelerationModifier = this.accelerationModifier,
             staminaRecoveryDelta = this.staminaRecoveryDelta,

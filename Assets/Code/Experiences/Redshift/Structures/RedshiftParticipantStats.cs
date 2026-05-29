@@ -1,4 +1,8 @@
-﻿/// <summary>
+﻿// Copyright 2026 Ayase Minori and Umamusume Racing Society
+// Licensed under the BSD-3-Clause License
+// See LICENSE for details
+
+/// <summary>
 /// Defines the discrete performance tiers for participant statistics.
 /// Each tier represents a flat mathematical weight inside the physics engine.
 /// </summary>

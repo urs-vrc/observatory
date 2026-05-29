@@ -1,4 +1,8 @@
-﻿/// <summary>
+﻿// Copyright 2026 Ayase Minori and Umamusume Racing Society
+// Licensed under the BSD-3-Clause License
+// See LICENSE for details
+
+/// <summary>
 /// Dictates the situational or positional requirements before a skill can execute.
 /// </summary>
 public struct RedshiftSkillCondition

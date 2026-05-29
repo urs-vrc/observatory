@@ -1,4 +1,8 @@
-﻿/// <summary>
+﻿// Copyright 2026 Ayase Minori and Umamusume Racing Society
+// Licensed under the BSD-3-Clause License
+// See LICENSE for details
+
+/// <summary>
 /// Defines the valid events that can be sent through <see cref="RedshiftEventBus"/>.
 /// These are usually lightweight events that are intended to make it easy for clients
 /// to sync states with each other.
