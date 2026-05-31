@@ -14,7 +14,7 @@ public struct RedshiftSkillTemplate
     [Tooltip("The exact event pulse this skill wakes up to evaluate.")]
     public RedshiftEvents triggerEvent;
 
-    [Header("2. Race Phase Constraints (-1 = Any, 0 = Gate, 1 = Early, 2 = Mid, 3 = Late)")]
+    [Header("2. Race Phase Constraints (-1 = Any, 0 = Early, 1 = Mid, 2 = Late, 3 = Final)")]
     [Range(-1, 3)] 
     public int requiredPhase; 
 

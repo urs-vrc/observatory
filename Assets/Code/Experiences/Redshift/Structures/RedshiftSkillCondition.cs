@@ -12,7 +12,7 @@ public struct RedshiftSkillCondition
     /// </summary>
     public RedshiftEvents triggerEvent;
     /// <summary>
-    /// Phase constraint (0 = Gate, 1 = Early, 2 = Mid, 3 = Final Spurt)
+    /// Phase constraint (0 = Early, 1 = Mid, 2 = Late, 3 = Final Spurt)
     /// </summary>
     public int requiredPhase;
     /// <summary>
