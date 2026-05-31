@@ -6,7 +6,6 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomPropertyDrawer(typeof(RedshiftSkillTemplate))]
-[CustomPropertyDrawer(typeof(RedshiftSkillTemplate))]
 public class RedshiftSkillTemplateEditor : PropertyDrawer
 {
     private readonly Color ColorBuff     = new Color(0.20f, 0.70f, 0.30f, 0.25f);
