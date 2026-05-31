@@ -6,9 +6,10 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomPropertyDrawer(typeof(RedshiftSkillTemplate))]
+[CustomPropertyDrawer(typeof(RedshiftSkillTemplate))]
 public class RedshiftSkillTemplateEditor : PropertyDrawer
 {
-    private readonly Color ColorBuff     = new Color(0.20f, 0.70f, 0.30f, 0.25f); 
+    private readonly Color ColorBuff     = new Color(0.20f, 0.70f, 0.30f, 0.25f);
     private readonly Color ColorRecovery = new Color(0.15f, 0.50f, 0.85f, 0.25f);
     private readonly Color ColorDebuff   = new Color(0.85f, 0.20f, 0.20f, 0.25f);
     private readonly Color ColorDefault  = new Color(0.25f, 0.25f, 0.25f, 0.15f);
@@ -23,6 +24,8 @@ public class RedshiftSkillTemplateEditor : PropertyDrawer
         SerializedProperty leadProp   = property.FindPropertyRelative("requiresLeadingPack");
         SerializedProperty trailProp  = property.FindPropertyRelative("requiresTrailingPack");
         SerializedProperty duelProp   = property.FindPropertyRelative("requiresDueling");
+        
+        SerializedProperty cooldownProp = property.FindPropertyRelative("skillCooldown");
         
         SerializedProperty targetProp = property.FindPropertyRelative("skillTarget");
         SerializedProperty speedProp  = property.FindPropertyRelative("speedLimitModifier");
@@ -51,7 +54,7 @@ public class RedshiftSkillTemplateEditor : PropertyDrawer
         currentY += EditorGUIUtility.singleLineHeight + 8;
         DrawLineSeparator(position.x + 8, currentY, position.width - 16);
         currentY += 6;
-        
+
         Rect gateHeaderRect = new Rect(position.x + 8, currentY, position.width - 16, EditorGUIUtility.singleLineHeight);
         EditorGUI.LabelField(gateHeaderRect, "Activation Constraints & Gates", EditorStyles.miniBoldLabel);
         currentY += EditorGUIUtility.singleLineHeight + 4;
@@ -61,10 +64,16 @@ public class RedshiftSkillTemplateEditor : PropertyDrawer
         
         EditorGUI.PropertyField(eventRect, eventProp, new GUIContent("Trigger Event"));
         
-        string[] phaseLabels = new string[] { "Any Phase (-1)", "Early Phase (0)", "Mid Phase (1)", "Late Phase  (2)", "Final Spurt (3)" };
+        string[] phaseLabels = new string[] { "Any Phase (-1)", "Gate Burst (0)", "Early Leg (1)", "Mid Leg (2)", "Final Spurt (3)" };
         int selectedIndex = phaseProp.intValue + 1;
         selectedIndex = EditorGUI.Popup(phaseRect, "Required Phase", selectedIndex, phaseLabels);
         phaseProp.intValue = selectedIndex - 1;
+
+        currentY += EditorGUIUtility.singleLineHeight + 4;
+
+        Rect cooldownRect = new Rect(position.x + 8, currentY, fieldWidth, EditorGUIUtility.singleLineHeight);
+        string cooldownLabelText = cooldownProp.floatValue <= 0f ? "Cooldown (0 = Off)" : "Cooldown (s)";
+        EditorGUI.PropertyField(cooldownRect, cooldownProp, new GUIContent(cooldownLabelText));
 
         currentY += EditorGUIUtility.singleLineHeight + 6;
 
@@ -81,12 +90,10 @@ public class RedshiftSkillTemplateEditor : PropertyDrawer
         DrawLineSeparator(position.x + 8, currentY, position.width - 16);
         currentY += 6;
 
-        
         Rect targetRect = new Rect(position.x + 8, currentY, position.width - 16, EditorGUIUtility.singleLineHeight);
         EditorGUI.PropertyField(targetRect, targetProp, new GUIContent("Target Delivery"));
         currentY += EditorGUIUtility.singleLineHeight + 6;
 
-        // Evaluate character identity roles to select the correct hardcoded color band
         Color highlightColor = ColorDefault;
         string typeLabel = "UNCONFIGURED STATUS MODIFIER";
 
@@ -109,7 +116,7 @@ public class RedshiftSkillTemplateEditor : PropertyDrawer
             highlightColor = ColorRecovery;
             typeLabel = "PAYLOAD MATRIX: STAMINA RECOVERY";
         }
-        
+
         Rect modBoxRect = new Rect(position.x + 4, currentY, position.width - 8, (EditorGUIUtility.singleLineHeight * 2) + 14);
         EditorGUI.DrawRect(modBoxRect, highlightColor);
 
@@ -135,7 +142,7 @@ public class RedshiftSkillTemplateEditor : PropertyDrawer
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        return (EditorGUIUtility.singleLineHeight * 7) + 58f;
+        return (EditorGUIUtility.singleLineHeight * 8) + 62f;
     }
 
     private void DrawLineSeparator(float x, float y, float width)

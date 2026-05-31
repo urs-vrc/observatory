@@ -36,6 +36,8 @@ public struct RedshiftSkillTemplate
     [Tooltip("Positive heals stamina, negative drains/debuffs stamina.")]
     public float staminaRecoveryDelta;
     public float duration;
+    [Tooltip("Cooldown period for the skill, set to zero to make skill single-use")]
+    public float cooldown;
 
     /// <summary>
     /// Extracts the clean, dedicated condition criteria for the evaluation engine.

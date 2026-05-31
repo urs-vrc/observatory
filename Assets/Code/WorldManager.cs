@@ -27,7 +27,9 @@ public class WorldManager : UdonSharpBehaviour
     private readonly int _weatherID = Shader.PropertyToID("_WeatherIntensity");
     
 
-    [Header("Weather")] public float WeatherSpeed = 0.01f;
+    [Header("Weather")] 
+    public float WeatherSpeed = 0.01f;
+    public float currentRawWeatherIntensity = 0f;
     
     private void Start()
     {
@@ -114,8 +116,14 @@ public class WorldManager : UdonSharpBehaviour
         RenderSettings.skybox.SetVector(_sunDirID, new Vector4(sunDirection.x, sunDirection.y, sunDirection.z, 0f));
 
         var weatherWave = Mathf.Sin(Time.timeSinceLevelLoad * WeatherSpeed);
-        var currentWeatherIntensity = (weatherWave * 0.5f) + 0.5f;
+        currentRawWeatherIntensity = (weatherWave * 0.5f) + 0.5f;
+        var currentWeatherIntensity = currentRawWeatherIntensity;
         
         RenderSettings.skybox.SetFloat(_weatherID, currentWeatherIntensity);
+    }
+    
+    public float GetCurrentRawWeatherIntensity()
+    {
+        return currentRawWeatherIntensity;
     }
 }
