@@ -4,6 +4,7 @@
 using System;
 using UdonSharp;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VRC.SDKBase;
 using VRC.Udon;
 
@@ -11,10 +12,15 @@ public class WorldManager : UdonSharpBehaviour
 {
     [Header("Time of Day")] 
     public Transform sunEntity;
-    [UdonSynced] public float _hostTime;
+    [UdonSynced] 
+    public float hostTime;
 
     private float _systemTimeOffset = 0f;
     private bool _hasCalculatedOffset = false;
+    
+    private float _smoothTime = 0f;
+    [Tooltip("How fast the skybox transitions to match the host time. Higher = faster catchup.")]
+    public float timeSmoothingSpeed = 0.5f;
 
     [Header("Debug Controls")]
     [Tooltip("Tick this box to control the skybox time manually with the slider below.")]
@@ -28,7 +34,7 @@ public class WorldManager : UdonSharpBehaviour
     
 
     [Header("Weather")] 
-    public float WeatherSpeed = 0.01f;
+    public float weatherSpeed = 0.01f;
     public float currentRawWeatherIntensity = 0f;
     
     private void Start()
@@ -36,6 +42,28 @@ public class WorldManager : UdonSharpBehaviour
         if (Networking.IsOwner(gameObject))
         {
             SyncInitialTime();
+            _smoothTime = hostTime;
+        }
+    }
+
+    public override void OnPlayerJoined(VRCPlayerApi player)
+    {
+        if (player.isLocal)
+        {
+            if (Networking.IsOwner(gameObject))
+            {
+                SyncInitialTime();
+            }
+            else
+            {
+                var localSystemTime = GetNormalizedSystemTime();
+                _systemTimeOffset = localSystemTime - hostTime;
+                _hasCalculatedOffset = true;
+            }
+            
+            // Snap the visual smooth time directly to the current host time 
+            // on join so the sun doesn't aggressively spin on load
+            _smoothTime = hostTime; 
         }
     }
 
@@ -51,7 +79,6 @@ public class WorldManager : UdonSharpBehaviour
     {
         if (player.isLocal && Networking.IsOwner(gameObject))
         {
-            // we need to keep the time we already initially synced already
             _hasCalculatedOffset = false;
             UpdateHostTime();
         }
@@ -63,7 +90,7 @@ public class WorldManager : UdonSharpBehaviour
     {
         if (debugOverride)
         {
-            _hostTime = debugTime;
+            hostTime = debugTime;
             return;
         }
 
@@ -71,7 +98,7 @@ public class WorldManager : UdonSharpBehaviour
 
         if (!_hasCalculatedOffset)
         {
-            _systemTimeOffset = localSystemTime - _hostTime;
+            _systemTimeOffset = localSystemTime - hostTime;
             _hasCalculatedOffset = true;
         }
 
@@ -80,18 +107,18 @@ public class WorldManager : UdonSharpBehaviour
         if (calculatedTime >= 1f) calculatedTime -= 1f;
         if (calculatedTime < 0f) calculatedTime += 1f;
         
-        _hostTime = calculatedTime;
+        hostTime = calculatedTime;
     }
 
     private void SyncInitialTime()
     {
         if (debugOverride)
         {
-            _hostTime = debugTime;
+            hostTime = debugTime;
         }
         else
         {
-            _hostTime = GetNormalizedSystemTime();
+            hostTime = GetNormalizedSystemTime();
         }
         _systemTimeOffset = 0f;
         _hasCalculatedOffset = true;
@@ -107,7 +134,8 @@ public class WorldManager : UdonSharpBehaviour
 
     private void UpdateSkybox()
     {
-        var angle = _hostTime * 360f;
+        _smoothTime = Mathf.LerpAngle(_smoothTime * 360f, hostTime * 360f, Time.deltaTime * timeSmoothingSpeed) / 360f;
+        var angle = _smoothTime * 360f;
 
         if (!sunEntity) return;
         
@@ -115,7 +143,7 @@ public class WorldManager : UdonSharpBehaviour
         var sunDirection = -sunEntity.forward;
         RenderSettings.skybox.SetVector(_sunDirID, new Vector4(sunDirection.x, sunDirection.y, sunDirection.z, 0f));
 
-        var weatherWave = Mathf.Sin(Time.timeSinceLevelLoad * WeatherSpeed);
+        var weatherWave = Mathf.Sin(Time.timeSinceLevelLoad * weatherSpeed);
         currentRawWeatherIntensity = (weatherWave * 0.5f) + 0.5f;
         var currentWeatherIntensity = currentRawWeatherIntensity;
         
