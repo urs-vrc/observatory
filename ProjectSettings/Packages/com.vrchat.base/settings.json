@@ -3,6 +3,6 @@
     "allowVRCPackageChanges": false,
     "samplesHintCreated": false,
     "debugVCCConnection": false,
-    "dpidMipmaps": false,
+    "dpidMipmaps": true,
     "dpidConservative": true
 }
