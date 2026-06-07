@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: ea25370cbed8468428426c6d892c2a4c,
+    type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 83e9830de108eff47bef902e4ac454b5,
     type: 2}
 --- !u!196 &4
@@ -872,8 +873,8 @@ MonoBehaviour:
   useAssignedLayers: 0
   DynamicPrefabs: []
   DynamicMaterials:
-  - {fileID: 2100000, guid: 3ccfb0993da972448a58a87f4fce42cf, type: 2}
   - {fileID: 1567818261435876064, guid: 18ab9f9a3f3862344b095e23eff14713, type: 3}
+  - {fileID: 2100000, guid: 3ccfb0993da972448a58a87f4fce42cf, type: 2}
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   LightMapsNear: []
   LightMapsFar: []
@@ -987,7 +988,8 @@ MonoBehaviour:
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 7111575897785925492}
   sunEntity: {fileID: 1787983411}
-  _hostTime: 0
+  hostTime: 0
+  timeSmoothingSpeed: 0.5
   debugOverride: 0
   debugTime: 0.538
   weatherSpeed: 0.01
