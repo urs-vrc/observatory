@@ -25,7 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.1981132, g: 0.19344072, b: 0.18409576, a: 1}
   m_AmbientIntensity: 1.03
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.8962264, g: 0.74516433, b: 0.612985, a: 1}
+  m_SubtractiveShadowColor: {r: 0.81568635, g: 0.7686275, b: 0.7411765, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: f1d06fdaa748d5c41a8921ff83e41fc5, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1787983410}
-  m_IndirectSpecularColor: {r: 0.008115925, g: 0.00926158, b: 0.013480146, a: 1}
+  m_IndirectSpecularColor: {r: 0.28884935, g: 0.30925465, b: 0.3396985, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -275,17 +275,43 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 18ab9f9a3f3862344b095e23eff14713,
         type: 3}
       propertyPath: m_ReceiveGI
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 18ab9f9a3f3862344b095e23eff14713,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 18ab9f9a3f3862344b095e23eff14713,
+        type: 3}
+      propertyPath: m_MinimumChartSize
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 18ab9f9a3f3862344b095e23eff14713,
+        type: 3}
+      propertyPath: m_AutoUVMaxDistance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 18ab9f9a3f3862344b095e23eff14713,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 18ab9f9a3f3862344b095e23eff14713,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 1567818261435876064, guid: 18ab9f9a3f3862344b095e23eff14713,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: 18ab9f9a3f3862344b095e23eff14713,
         type: 3}
       propertyPath: m_Name
       value: tutortv_observatory_building
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 18ab9f9a3f3862344b095e23eff14713,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 18ab9f9a3f3862344b095e23eff14713,
         type: 3}
@@ -488,12 +514,38 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 14b9695db7620d04b9092b3dd2718e02,
         type: 3}
       propertyPath: m_ReceiveGI
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 14b9695db7620d04b9092b3dd2718e02,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 14b9695db7620d04b9092b3dd2718e02,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 14b9695db7620d04b9092b3dd2718e02,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 14b9695db7620d04b9092b3dd2718e02,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 1567818261435876064, guid: 18ab9f9a3f3862344b095e23eff14713,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: 14b9695db7620d04b9092b3dd2718e02,
         type: 3}
       propertyPath: m_Name
       value: HubIsland
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 14b9695db7620d04b9092b3dd2718e02,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 14b9695db7620d04b9092b3dd2718e02,
         type: 3}
@@ -690,8 +742,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 809f9e52ad8389a45810cb9270f9cc28,
         type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 809f9e52ad8389a45810cb9270f9cc28,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2289172871717313797, guid: 809f9e52ad8389a45810cb9270f9cc28,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2289172871717313797, guid: 809f9e52ad8389a45810cb9270f9cc28,
         type: 3}
@@ -701,7 +763,12 @@ PrefabInstance:
     - target: {fileID: 7174211681920913401, guid: 809f9e52ad8389a45810cb9270f9cc28,
         type: 3}
       propertyPath: m_ReceiveGI
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7174211681920913401, guid: 809f9e52ad8389a45810cb9270f9cc28,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7174211681920913401, guid: 809f9e52ad8389a45810cb9270f9cc28,
         type: 3}
@@ -750,7 +817,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -789,11 +856,11 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 2
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 4530
+  m_ColorTemperature: 4921
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -1028,8 +1095,8 @@ MonoBehaviour:
   useAssignedLayers: 0
   DynamicPrefabs: []
   DynamicMaterials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 2100000, guid: 3ccfb0993da972448a58a87f4fce42cf, type: 2}
+  - {fileID: 1567818261435876064, guid: 18ab9f9a3f3862344b095e23eff14713, type: 3}
   LightMapsNear: []
   LightMapsFar: []
   LightMode: 0

@@ -76,10 +76,10 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _WeatherIntensity: 0.5689663
+    - _WeatherIntensity: 0.91979986
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SunDirection: {r: 0.9859839, g: -0.1668409, b: 0.00000006752089, a: 0}
+    - _SunDirection: {r: -0.76923335, g: 0.63896805, b: 0.000000029802322, a: 0}
   m_BuildTextureStacks: []

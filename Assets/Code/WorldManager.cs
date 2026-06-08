@@ -136,18 +136,22 @@ public class WorldManager : UdonSharpBehaviour
     {
         _smoothTime = Mathf.LerpAngle(_smoothTime * 360f, hostTime * 360f, Time.deltaTime * timeSmoothingSpeed) / 360f;
         var angle = _smoothTime * 360f;
+        var currentSkybox = RenderSettings.skybox;
 
         if (!sunEntity) return;
         
         sunEntity.rotation = Quaternion.Euler(angle, -90f, 0f);
         var sunDirection = -sunEntity.forward;
-        RenderSettings.skybox.SetVector(_sunDirID, new Vector4(sunDirection.x, sunDirection.y, sunDirection.z, 0f));
+
+        if (!currentSkybox) return; 
+        currentSkybox.SetVector(_sunDirID, new Vector4(sunDirection.x, sunDirection.y, sunDirection.z, 0f));
 
         var weatherWave = Mathf.Sin(Time.timeSinceLevelLoad * weatherSpeed);
         currentRawWeatherIntensity = (weatherWave * 0.5f) + 0.5f;
         var currentWeatherIntensity = currentRawWeatherIntensity;
         
-        RenderSettings.skybox.SetFloat(_weatherID, currentWeatherIntensity);
+        currentSkybox.SetFloat(_weatherID, currentWeatherIntensity);
+        RenderSettings.skybox = currentSkybox;
     }
     
     public float GetCurrentRawWeatherIntensity()
