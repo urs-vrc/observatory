@@ -7,8 +7,8 @@ Shader "Skybox/LiaSky"
 {
     Properties
     {
-        _SunDirection ("Sun Direction", Vector) = (0, 1, 0, 0)
-        _WeatherIntensity ("Weather Intensity", Range(0, 1)) = 0
+        _SunDirection ("Editor Preview Sun Dir", Vector) = (0, 1, 0, 0)
+        _WeatherIntensity ("Editor Preview Weather", Range(0, 1)) = 0
     }
     SubShader
     {
@@ -36,9 +36,9 @@ Shader "Skybox/LiaSky"
                 float3 viewDir : TEXCOORD0;
                 UNITY_VERTEX_OUTPUT_STEREO 
             };
-
-            float4 _SunDirection;
-            float _WeatherIntensity;
+            
+            float4 _UdonSunDirection;
+            float _UdonWeatherIntensity;
 
             float hash3(float3 p)
             {
@@ -54,8 +54,6 @@ Shader "Skybox/LiaSky"
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                 
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                
-                // Transform the local vertex coordinate into a clean 3D direction vector
                 o.viewDir = v.vertex.xyz; 
                 return o;
             }
@@ -64,29 +62,27 @@ Shader "Skybox/LiaSky"
             {
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
 
-                // Use the normalized 3D structural view direction passed from vertex properties
                 float3 viewDir = normalize(i.viewDir);
-                float3 sunDir = normalize(_SunDirection.xyz);
-                float skyVisibility = lerp(1.0f, 0.08f, _WeatherIntensity);
+                float3 sunDir = normalize(_UdonSunDirection.xyz);
+                float skyVisibility = lerp(1.0f, 0.08f, _UdonWeatherIntensity);
 
-                // Evaluate Day/Night state strictly from our actual physical sun height vector
+                // Evaluate Day/Night state
                 float isNight = smoothstep(0.2f, -0.2f, sunDir.y);
                 
                 float3 daySkyTone = float3(0.15f, 0.4f, 0.7f);
                 float goldenHour = smoothstep(0.3f, -0.1f, abs(sunDir.y));
                 float3 horizonGlow = float3(0.95f, 0.5f, 0.25f) * goldenHour * max(0.0f, sunDir.y + 0.3f);
                 
-                // Smooth horizon sky blend using the 3D Y component
                 float3 daySkyColor = lerp(horizonGlow, daySkyTone, max(0.0f, viewDir.y * 0.5f + 0.5f));
                 float3 nightSkyColor = float3(0.002f, 0.002f, 0.006f);
                 float3 clearSky = lerp(daySkyColor, nightSkyColor, isNight);
                 
                 float3 stormSky = lerp(float3(0.25f, 0.27f, 0.3f), float3(0.001f, 0.001f, 0.003f), isNight);
-                float3 currentSky = lerp(clearSky, stormSky, _WeatherIntensity);
+                float3 currentSky = lerp(clearSky, stormSky, _UdonWeatherIntensity);
                 
                 float3 finalColor = currentSky;
 
-                // High-Density Procedural Stars Generation
+                // Procedural Stars
                 if (isNight > 0.0f)
                 {
                     float3 starGrid = viewDir * 150.0f;
@@ -122,9 +118,7 @@ Shader "Skybox/LiaSky"
                 float natieAngle = acos(clamp(natieDot, -1.0f, 1.0f));
                 float natieCore = smoothstep(0.0018f, 0.0f, natieAngle);
                 
-                
                 float natieGlowBloom = smoothstep(0.04f, 0.0f, natieAngle) * 0.4f;
-                
                 float natieGlowPulse = sin(_Time.y * 1.2f) * 0.08f + 0.92f;
                 float3 goldenColor = float3(1.0f, 0.85f, 0.45f);
                 
@@ -135,8 +129,8 @@ Shader "Skybox/LiaSky"
                 float sunDisk = smoothstep(0.9996f, 0.9998f, sunDot) * (1.0f - isNight);
                 float sunGlow = smoothstep(0.995f, 0.90f, sunDot) * 0.4f * (1.0f - isNight);
 
-                float sunWeatherDim = lerp(1.0f, 0.25f, _WeatherIntensity);
-                float3 sunColor = lerp(float3(1.0f, 0.96f, 0.88f), float3(0.4f, 0.4f, 0.4f), _WeatherIntensity);
+                float sunWeatherDim = lerp(1.0f, 0.25f, _UdonWeatherIntensity);
+                float3 sunColor = lerp(float3(1.0f, 0.96f, 0.88f), float3(0.4f, 0.4f, 0.4f), _UdonWeatherIntensity);
 
                 finalColor += (sunDisk + sunGlow) * sunColor * sunWeatherDim;
 

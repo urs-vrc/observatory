@@ -4,7 +4,6 @@
 using System;
 using UdonSharp;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VRC.SDKBase;
 using VRC.Udon;
 
@@ -29,8 +28,8 @@ public class WorldManager : UdonSharpBehaviour
     public float debugTime = 0.5f;
     
     // shader IDs
-    private readonly int _sunDirID = Shader.PropertyToID("_SunDirection");
-    private readonly int _weatherID = Shader.PropertyToID("_WeatherIntensity");
+    private int _sunDirID;
+    private int _weatherID;
     
 
     [Header("Weather")] 
@@ -39,6 +38,8 @@ public class WorldManager : UdonSharpBehaviour
     
     private void Start()
     {
+        _sunDirID = VRCShader.PropertyToID("_UdonSunDirection");
+        _weatherID = VRCShader.PropertyToID("_UdonWeatherIntensity");
         if (Networking.IsOwner(gameObject))
         {
             SyncInitialTime();
@@ -48,21 +49,20 @@ public class WorldManager : UdonSharpBehaviour
 
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
-        if (player.isLocal)
+        if (player.isLocal && Networking.IsOwner(gameObject))
         {
-            if (Networking.IsOwner(gameObject))
-            {
-                SyncInitialTime();
-            }
-            else
-            {
-                var localSystemTime = GetNormalizedSystemTime();
-                _systemTimeOffset = localSystemTime - hostTime;
-                _hasCalculatedOffset = true;
-            }
-            
-            // Snap the visual smooth time directly to the current host time 
-            // on join so the sun doesn't aggressively spin on load
+            SyncInitialTime();
+            _smoothTime = hostTime; 
+        }
+    }
+    
+    public override void OnDeserialization()
+    {
+        if (!Networking.IsOwner(gameObject) && !_hasCalculatedOffset)
+        {
+            var localSystemTime = GetNormalizedSystemTime();
+            _systemTimeOffset = localSystemTime - hostTime;
+            _hasCalculatedOffset = true;
             _smoothTime = hostTime; 
         }
     }
@@ -136,26 +136,17 @@ public class WorldManager : UdonSharpBehaviour
     {
         _smoothTime = Mathf.LerpAngle(_smoothTime * 360f, hostTime * 360f, Time.deltaTime * timeSmoothingSpeed) / 360f;
         var angle = _smoothTime * 360f;
-        var currentSkybox = RenderSettings.skybox;
 
         if (!sunEntity) return;
         
         sunEntity.rotation = Quaternion.Euler(angle, -90f, 0f);
         var sunDirection = -sunEntity.forward;
 
-        if (!currentSkybox) return; 
-        currentSkybox.SetVector(_sunDirID, new Vector4(sunDirection.x, sunDirection.y, sunDirection.z, 0f));
-
         var weatherWave = Mathf.Sin(Time.timeSinceLevelLoad * weatherSpeed);
         currentRawWeatherIntensity = (weatherWave * 0.5f) + 0.5f;
         var currentWeatherIntensity = currentRawWeatherIntensity;
         
-        currentSkybox.SetFloat(_weatherID, currentWeatherIntensity);
-        RenderSettings.skybox = currentSkybox;
-    }
-    
-    public float GetCurrentRawWeatherIntensity()
-    {
-        return currentRawWeatherIntensity;
+        VRCShader.SetGlobalVector(_sunDirID, new Vector4(sunDirection.x, sunDirection.y, sunDirection.z, 0f));
+        VRCShader.SetGlobalFloat(_weatherID, currentWeatherIntensity);
     }
 }

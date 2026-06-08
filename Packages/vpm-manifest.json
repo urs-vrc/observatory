@@ -11,6 +11,9 @@
     },
     "com.anatawa12.multi-unity-package-exporter": {
       "version": "0.1.1"
+    },
+    "net.ureishi.qvpen": {
+      "version": "3.3.14"
     }
   },
   "locked": {
@@ -31,6 +34,12 @@
     "com.anatawa12.multi-unity-package-exporter": {
       "version": "0.1.1",
       "dependencies": {}
+    },
+    "net.ureishi.qvpen": {
+      "version": "3.3.14",
+      "dependencies": {
+        "com.vrchat.worlds": "^3.5.0"
+      }
     }
   }
 }
