@@ -135,17 +135,19 @@ public class WorldManager : UdonSharpBehaviour
     private void UpdateSkybox()
     {
         _smoothTime = Mathf.LerpAngle(_smoothTime * 360f, hostTime * 360f, Time.deltaTime * timeSmoothingSpeed) / 360f;
-        var angle = _smoothTime * 360f;
+    
+        // Shift the phase by -90 degrees so Noon is overhead and Midnight is underground
+        var angle = (_smoothTime * 360f) - 90f;
 
         if (!sunEntity) return;
-        
+    
         sunEntity.rotation = Quaternion.Euler(angle, -90f, 0f);
         var sunDirection = -sunEntity.forward;
 
         var weatherWave = Mathf.Sin(Time.timeSinceLevelLoad * weatherSpeed);
         currentRawWeatherIntensity = (weatherWave * 0.5f) + 0.5f;
         var currentWeatherIntensity = currentRawWeatherIntensity;
-        
+    
         VRCShader.SetGlobalVector(_sunDirID, new Vector4(sunDirection.x, sunDirection.y, sunDirection.z, 0f));
         VRCShader.SetGlobalFloat(_weatherID, currentWeatherIntensity);
     }
