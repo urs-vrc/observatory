@@ -1651,6 +1651,108 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1076515507
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1076515511}
+  - component: {fileID: 1076515510}
+  - component: {fileID: 1076515509}
+  - component: {fileID: 1076515508}
+  m_Layer: 0
+  m_Name: EQS_DATA
+  m_TagString: EditorOnly
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1076515508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076515507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd3386b3f1c214f4392a8072b69205e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Shader:
+    PC: {fileID: 4800000, guid: 639016a21e17aa74e885b89ad2ef0c96, type: 3}
+    Quest: {fileID: 4800000, guid: bd1d3c42d02e4e499bf1bc64e64f90d6, type: 3}
+  MainColor:
+    PC: {r: 0, g: 0, b: 0, a: 0}
+    Quest: {r: 0, g: 0, b: 0, a: 0}
+  GPUInstancing:
+    PC: 0
+    Quest: 0
+--- !u!114 &1076515509
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076515507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80acf45703dd3f0458b5c15f1d8a841f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active:
+    PC: 1
+    Quest: 1
+  Tag:
+    PC: Untagged
+    Quest: Untagged
+  Layer:
+    PC: 4
+    Quest: 4
+  StaticEditorFlags:
+    PC: 1
+    Quest: 1
+--- !u!114 &1076515510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076515507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee80084b7ceddd048b648d3acb99f068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Objects:
+  - Target: {fileID: 2111179196}
+    Type: {fileID: 1076515509}
+    Foldout: 1
+  - Target: {fileID: 2100000, guid: 54af7a22513c54142aac8cb974fccd5d, type: 2}
+    Type: {fileID: 1076515508}
+    Foldout: 1
+  version: 131
+  buildInfo:
+    CachedBuildTarget: 13
+    NewBuildTarget: 13
+--- !u!4 &1076515511
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076515507}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1196580482
 Mesh:
   m_ObjectHideFlags: 0
@@ -2639,7 +2741,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 54af7a22513c54142aac8cb974fccd5d, type: 2}
+  - {fileID: 2100000, guid: f56d44cc6f78a5c4bb318fba23307303, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -72145,10 +72247,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: c2af845bdfb561149b08ba13167ff040, type: 2}
   - {fileID: 2100000, guid: 48f32ce8d7140f045a2c568df3a8d9bd, type: 2}
   - {fileID: 2100000, guid: 3ccfb0993da972448a58a87f4fce42cf, type: 2}
-  - {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 1567818261435876064, guid: 18ab9f9a3f3862344b095e23eff14713, type: 3}
   - {fileID: 2100000, guid: 419ae9fed5372564c995339c60fd7ebf, type: 2}
-  - {fileID: 2100000, guid: 54af7a22513c54142aac8cb974fccd5d, type: 2}
+  - {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f56d44cc6f78a5c4bb318fba23307303, type: 2}
+  - {fileID: 1567818261435876064, guid: 18ab9f9a3f3862344b095e23eff14713, type: 3}
   LightMapsNear: []
   LightMapsFar: []
   LightMode: 0
@@ -72428,3 +72530,4 @@ SceneRoots:
   - {fileID: 2134264383}
   - {fileID: 40354103}
   - {fileID: 1502795908}
+  - {fileID: 1076515511}
