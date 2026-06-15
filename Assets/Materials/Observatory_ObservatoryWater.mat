@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Observatory_ObservatoryWater
-  m_Shader: {fileID: 4800000, guid: bd1d3c42d02e4e499bf1bc64e64f90d6, type: 3}
+  m_Shader: {fileID: 4800000, guid: 639016a21e17aa74e885b89ad2ef0c96, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
