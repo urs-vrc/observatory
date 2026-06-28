@@ -5,3 +5,6 @@ Tutor TV Observatory by Tommen, Licensed under CC Attribution
 
 Armillary Sphere by KRei, Licensed under CC Attribution
 (https://skfb.ly/op6VM)
+
+Open Sound Audio Library by Facepunch Ltd, Licensed under CC0
+https://sbox.game/opensound/~packages
